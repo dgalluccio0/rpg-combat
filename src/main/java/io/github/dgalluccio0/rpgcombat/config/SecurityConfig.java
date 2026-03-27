@@ -1,4 +1,4 @@
-package io.github.dgalluccio0.rpgcombat.security;
+package io.github.dgalluccio0.rpgcombat.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +25,8 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests(authorize ->
 				authorize.anyRequest().authenticated())
-			.httpBasic(Customizer.withDefaults());
-			//.formLogin(Customizer.withDefaults());
+			.httpBasic(Customizer.withDefaults())
+			.formLogin(Customizer.withDefaults());
 
 		return http.build();
 	}

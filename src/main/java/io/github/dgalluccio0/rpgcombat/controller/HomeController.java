@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 	@GetMapping("/")
 	public String home() {
-		return "home";
+		return "Pacchetto\nProtocollo\nIndirizzo IP";
 	}
 
 }

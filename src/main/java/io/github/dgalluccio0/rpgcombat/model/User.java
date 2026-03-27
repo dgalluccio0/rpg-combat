@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,17 +29,18 @@ public class User {
 	
 	@NotBlank
 	@Email
-	@Size(max = 100)
+	@Size(max = 256)
 	private String email;
 	
 	@NotBlank
-	@Size(max = 25)
+	@Size(max = 64)
 	private String username;
 	
 	@NotBlank
+	@Size(max = 256)
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(
 			name = "user_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
