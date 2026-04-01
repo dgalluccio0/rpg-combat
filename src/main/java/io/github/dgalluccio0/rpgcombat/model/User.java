@@ -8,8 +8,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import io.github.dgalluccio0.rpgcombat.utils.RoleType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,14 +49,9 @@ public class User implements UserDetails {
 	@NotBlank
 	@Size(max = 256)
 	private String password;
-	
-	@ManyToMany(fetch = FetchType.EAGER) // aggiunto per far sì che quando carica un utente carica pure tutti i ruoli altrimenti va in errore
-	@JoinTable(
-			name = "users_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id")
-			)
-	private List<Role> roles = new ArrayList<>();
+
+	@Enumerated(EnumType.STRING)
+	private RoleType role;
 	
 	@OneToMany(mappedBy="user",
 			cascade = CascadeType.ALL,
@@ -62,7 +60,7 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name())).toList();
+		return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
 	}
 	
 }
