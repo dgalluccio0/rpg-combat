@@ -1,5 +1,6 @@
 package io.github.dgalluccio0.rpgcombat.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +32,7 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@NotBlank
 	@Email
@@ -45,18 +47,18 @@ public class User implements UserDetails {
 	@Size(max = 256)
 	private String password;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER) // aggiunto per far sì che quando carica un utente carica pure tutti i ruoli altrimenti va in errore
 	@JoinTable(
-			name = "user_roles",
+			name = "users_roles",
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
-	private List<Role> roles;
+	private List<Role> roles = new ArrayList<>();
 	
 	@OneToMany(mappedBy="user",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
-	private List<Character> characters;
+	private List<Character> characters = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

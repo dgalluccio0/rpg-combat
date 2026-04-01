@@ -1,5 +1,6 @@
 package io.github.dgalluccio0.rpgcombat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class Character {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@ManyToOne
 	private User user;
@@ -35,7 +36,7 @@ public class Character {
 	@ElementCollection
     @JdbcTypeCode(SqlTypes.JSON) // va messo per essere sicuri che crei una colonna nella stessa tabella e non altre colonne
 	@Size(max = Finals.MAX_MOVES)
-	private List<Action> actions;
+	private List<Action> actions = new ArrayList<>();
 	
 	@NotNull
 	@PositiveOrZero

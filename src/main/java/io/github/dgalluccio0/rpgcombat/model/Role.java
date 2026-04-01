@@ -1,5 +1,6 @@
 package io.github.dgalluccio0.rpgcombat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.dgalluccio0.rpgcombat.utils.RoleType;
@@ -21,11 +22,11 @@ import lombok.NoArgsConstructor;
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@Enumerated(EnumType.STRING)
 	private RoleType name;
 	
 	@ManyToMany(mappedBy = "roles")
-	private List<User> users;
+	private List<User> users = new ArrayList<>();
 }
