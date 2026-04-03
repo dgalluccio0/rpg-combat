@@ -1,1 +1,1 @@
-Online game that features combat between characters represented by a detailed character sheet.
+Demo of a user manager using the Spring framework.
